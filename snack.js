@@ -181,3 +181,34 @@ getBooks(bookIds)
     .catch(error => {
         console.error('Errore nel recupero dei libri:', error);
     });
+
+//! Snack 6 (Bonus) - Ordina i libri
+// Crea una variabile booleana (areThereAvailableBooks) per verificare se c’è almeno un libro disponibile.
+const areThereAvailableBooks = books.some(book => book.available);
+console.log('Ci sono libri disponibili?', areThereAvailableBooks);
+
+// Crea un array (booksByPrice) con gli elementi di books ordinati in base al prezzo (crescente).
+const booksByPrice = books
+    .slice()
+    .sort((a, b) => {
+        // Rimuovo il simbolo '€' e converto la stringa in numero
+        const priceA = Number(a.price.replace('€', ''));
+        const priceB = Number(b.price.replace('€', ''));
+        
+        return priceA - priceB;
+    })
+
+console.log('Libri ordinati per prezzo:', booksByPrice);
+
+// Ordina l’array booksByPrice in base alla disponibilità (prima quelli disponibili), senza creare un nuovo array.
+booksByPrice.sort((a, b) => {
+  if (a.available && !b.available) {
+    return -1; // a viene prima di b
+  }
+  if (!a.available && b.available) {
+    return 1; // b viene prima di a
+  }
+  return 0; // l'ordine rimane invariato
+});
+
+console.log('Libri ordinati per disponibilità:', booksByPrice);
