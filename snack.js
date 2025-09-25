@@ -212,3 +212,27 @@ booksByPrice.sort((a, b) => {
 });
 
 console.log('Libri ordinati per disponibilità:', booksByPrice);
+
+//! Snack 7 (Bonus) - Analizza i tag
+// Usa reduce per creare un oggetto (tagCounts) che conta quante volte ogni tag viene usato tra i libri.
+
+const tagCounts = books.reduce((acc, book) => {
+  // Controllo se il libro ha una proprietà 'tags' che non sia null o undefined
+  if (book.tags) {
+    // Scorro l'array di tag di ogni libro
+    book.tags.forEach(tag => {
+      // Se il tag esiste già nell'accumulatore, incremento il conteggio
+      if (acc[tag]) {
+        acc[tag]++;
+      } else {
+        // Altrimenti, creo una nuova chiave e imposto a 1
+        acc[tag] = 1;
+      }
+    });
+  }
+
+  // Restituisco l'accumulatore aggiornato
+  return acc;
+}, {}); // L'oggetto vuoto è il valore iniziale
+
+console.log('Elenco dei tag e quante volte vengono usati:', tagCounts);
