@@ -145,3 +145,39 @@ const agesSum = ages.reduce((acc, n) => {
 // Stampa in console l’età media degli autori dei libri.
 const mean = agesSum / ages.length;
 console.log(mean);
+
+//! Snack 5 (Bonus) - Raccogli i libri
+// Usando la l'API http://localhost:3333/books/{id} usa la combinazione di .map() e Promise.all(), 
+// per creare una funzione (getBooks) che a partire da un array di id (ids), 
+// ritorna una promise che risolve un array di libri (books).
+// Testala con l’array [2, 13, 7, 21, 19] .
+
+const getBooks = (ids) => {
+    // Usa .map() per trasformare ogni ID in una Promise di fetch.
+    const promises = ids.map(id => {
+        const url = `http://localhost:3333/books/${id}`;
+        return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        });
+    });
+    
+    // Usa Promise.all() per attendere che tutte le Promise siano risolte.
+    return Promise.all(promises);
+};
+
+// Array di ID fornito dall'esercizio
+const bookIds = [2, 13, 7, 21, 19];
+
+// Chiama la funzione e gestisci il risultato
+getBooks(bookIds)
+    .then(books => {
+        console.log('Libri recuperati con successo:');
+        console.log(books);
+    })
+    .catch(error => {
+        console.error('Errore nel recupero dei libri:', error);
+    });
