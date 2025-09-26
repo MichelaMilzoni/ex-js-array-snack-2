@@ -87,10 +87,10 @@ console.log(chalk.cyan('Libri disponibili'), availableBooks);
 const discountedBooks = availableBooks.map(book => {
 
     // uso replace per togliere € da ogni elemento
-  const priceAsNumber = Number(book.price.replace('€', ''));
+  const priceAsNumber = parseFloat(book.price.replace('€', ''));
 
   // Applico lo sconto e arrotonda
-  const discountedPrice = Math.round(priceAsNumber * 0.80 * 100) / 100;
+  const discountedPrice = (priceAsNumber * 0.80).toFixed(2);
 
   return {
     ...book,
