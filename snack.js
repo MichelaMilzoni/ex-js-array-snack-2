@@ -104,7 +104,7 @@ console.log(chalk.yellow('Libri disponibili scontati'), discountedBooks);
 const fullPricedBook = discountedBooks.find(book => {
 
     // uso replace per togliere € da ogni elemento
-    const priceAsNumber = Number(book.price.replace('€', ''));
+    const priceAsNumber = parseFloat(book.price.replace('€', ''));
 
     // restituisco true se il prezzo non ha decimali
     return JSON.stringify(priceAsNumber % 1 === 0);
@@ -131,7 +131,8 @@ authors.sort((a, b) => {
         return b.age - a.age
     }
 });
-
+//# ALTERNATIVA
+authors.sort((a, b) => (a.age - b.age) * (areAuthorsAdults ? 1 : -1))
 
 //! Snack 4 - Calcola l’età media
 // Creare un array (ages) che contiene le età degli autori dei libri.
